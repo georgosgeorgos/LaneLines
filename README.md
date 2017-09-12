@@ -4,40 +4,32 @@
 
 **Finding Lane Lines on the Road**
 
-The goals / steps of this project are the following:
-* Make a pipeline that finds lane lines on the road
-* Reflect on your work in a written report
-
-
-[//]: # (Image References)
-
-[image1]: ./examples/grayscale.jpg "Grayscale"
+The goals of this project is: **Make a pipeline that finds lane lines on the road**
 
 ---
 
-### Reflection
+### 1. pipeline.
 
-### 1. Describe your pipeline. As part of the description, explain how you modified the draw_lines() function.
+My pipeline to solve this problem consisted of 5 steps. In order:
 
-My pipeline consisted of 5 steps. First, I converted the images to grayscale, then I .... 
+* select a region of interest (in particular I selected a rectangle removing the 60% of the height);
+* grayscale the image;
+* select only pixels with a value between 200 and 255;
+* apply a Gaussian filter;
+* apply a Canny edge detector to select all the edges;
+* apply a Hough transform to detect only the lines;
 
-In order to draw a single line on the left and right lanes, I modified the draw_lines() function by ...
+to draw only the two correct lines on every images, I computed the angular coefficients of every piece of line detected by the Hough algorithm; I separated in positive(for the left line) and negative(for the right line); and I selected only the coeffs in a particular range(between 0.55 and 0.8 in absolute value).
+After that I averaged the two collection of angular coefficients and computed an approximate line, using two points (the bottom point and the upper point in the image).
 
-If you'd like to include images to show how the pipeline works, here is how to include an image: 
-
-![alt text][image1]
-
-
-### 2. Identify potential shortcomings with your current pipeline
-
-
-One potential shortcoming would be what would happen when ... 
-
-Another shortcoming could be ...
+Every step of the pipeline is visualized in the notebook.
 
 
-### 3. Suggest possible improvements to your pipeline
+### 2. shortcomings
 
-A possible improvement would be to ...
+One shortcoming is that I assume that my lines are always in a particular range of angular coefficients and this could be not always true; a second shortcoming is that, when the street is almost white and there is a curve, my pipeline has some problem to detect the right lines: probably the edge detection and the color threshold generate this problem.  
 
-Another potential improvement could be to ...
+
+### 3. improvements
+
+Using a Regression method to compute the final lines could help to obtain a more robust and general result.
