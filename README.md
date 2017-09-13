@@ -11,7 +11,7 @@ The goals of this project is: **Make a pipeline that finds lane lines on the roa
 My pipeline to solve this problem consisted of 5 steps. In order:
 
 * select a region of interest (in particular I selected a triangle removing 60% of the height);
-* HSVscale the image (or grayscale);
+* hsvscale the image (or grayscale);
 * select only white and yellow pixels (in hsv) or pixels with a value between 200 and 255 (in rgb);
 * apply a Gaussian filter;
 * apply a Canny edge detector to select all the edges;
@@ -20,9 +20,9 @@ My pipeline to solve this problem consisted of 5 steps. In order:
 to draw only the two correct lines on every images, I computed the angular coefficients of every piece of line detected by the Hough algorithm; I separated in positive(for the left line) and negative(for the right line); and I selected only the coeffs in a particular range(between 0.55 and 0.8 in absolute value).
 After that I used two methods to compute the lines:
 
-* 1)  average the two collection of angular coefficients and compute an approximate line, using two points (the bottom point and the upper point in the image).
+# 1)  average the two collection of angular coefficients and compute an approximate line, using two points (the bottom point and the upper point in the image);
 
-* 2)  using a Linear Regression
+# 2)  using a Linear Regression; 
 
 Every step of this pipeline is visualized in the notebook.
 
